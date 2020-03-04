@@ -41,7 +41,6 @@ CREATE TABLE book (
   "id" SERIAL PRIMARY KEY NOT NULL,
   "title" varchar,
   "author" int not null,
-  "author_link" varchar,
   "pages" int,
   "era" era,
   "series" varchar,
@@ -55,7 +54,8 @@ CREATE TABLE book (
 
 CREATE TABLE author (
   "id" SERIAL PRIMARY KEY NOT NULL,
-  "name" varchar unique
+  "name" varchar unique,
+  "url" varchar
 );
 
 ALTER TABLE "read_book" ADD FOREIGN KEY ("user_id") REFERENCES "account" ("id");
