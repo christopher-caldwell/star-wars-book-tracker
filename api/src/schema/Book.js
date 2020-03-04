@@ -1,43 +1,42 @@
-const { GraphQLObjectType, GraphQLString ,GraphQLID, GraphQLList } = require('graphql')
-const AuthorType = require('./Author')
+const { GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = require('graphql')
+const db = require('../db')
+const BookType = require('./types/Book')
+// const BookType = Book()
+console.log('book type', BookType)
+// console.log('book', Book)
 
-// similar to tables, or groups of data. 
-const BookType = new GraphQLObjectType({
-  name: 'Book',
-  // is a function because reasons
-  fields: () => ({
-    // define the allowable params of your query
-    id: { type: GraphQLID},
-    name: { type: GraphQLString},
-    genre: { type: GraphQLString},
-    author: {
-      type: AuthorType,
-      resolve(parent, args){
+// all books
+const booksQuery = {
+  type: GraphQLList(BookType),
+  async resolve(){
+    return db('book')
+  }
+}
 
-      }
-    }
-  })
-})
-
-const BooksQuery = {
+const bookQuery = {
   // relates to the defined schema
-  type: new GraphQLList(BookType),
-  resolve(parent, args){
+  type: BookType,
+  // they will pass an arg that is the book ID, which will be a string
+  args: { id: { type: GraphQLID } },
+  async resolve(parent, { id }){
     // data fetching code
+    const [ book ] = await db('book').where({
+      id
+    })
+    return book
   }
 }
 
-const BookQuery = {
-  // maps to the query construction
-  book: {
-    // relates to the defined schema
-    type: BookType,
-    // they will pass an arg that is the book ID, which will be a string
-    args: { id: { type: GraphQLID } },
-    resolve(parent, args){
-      // data fetching code
-    }
+const bookMutation = {
+  type: BookType,
+  args: {
+    name: { type: GraphQLNonNull(GraphQLString) },
+    authorId: { type: GraphQLID },
+    genre: { type: GraphQLString }
+  },
+  resolve(){
+    return null
   }
 }
 
-module.exports = { BookType, BookQuery, BooksQuery }
+module.exports = { bookQuery, booksQuery, bookMutation }

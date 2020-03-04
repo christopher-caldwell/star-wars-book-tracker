@@ -1,42 +1,40 @@
-const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt ,GraphQLID } = require('graphql')
-const BookType = require('./Book')
+const { GraphQLList, GraphQLString, GraphQLInt, GraphQLID, GraphQLNonNull } = require('graphql')
+const db = require('../db/')
+const AuthorType = require('./types/Author')
+console.log('book type', AuthorType)
 
-// similar to tables, or groups of data. 
-const AuthorType = new GraphQLObjectType({
-  name: 'Author',
-  // is a function because of scoping of BookType
-  fields: () => ({
-    // define the allowable params of your query
-    id: { type: GraphQLID},
-    name: { type: GraphQLString},
-    age: { type: GraphQLInt},
-    books: {
-      type: new GraphQLList(BookType),
-      resolver(parent){
-
-      }
-    }
-  })
-})
-
-const AuthorsQuery = {
+const authorsQuery = {
   // relates to the defined schema
-  type: new GraphQLList(AuthorType),
-  resolve(parent, args){
+  type: GraphQLList(AuthorType),
+  resolve(){
     // data fetching code
+    return db('author')
   }
 }
 
-module.exports = AuthorsQuery
-
-const AuthorQuery = {
+const authorQuery = {
   // relates to the defined schema
   type: AuthorType,
   // they will pass an arg that is the book ID, which will be a string
   args: { id: { type: GraphQLID } },
-  resolve(parent, args){
+  async resolve(_, { id }){
     // data fetching code
+    const [ author ] = await db('author').where({
+      id
+    })
+    return author
   }
 }
 
-module.exports = { AuthorType, AuthorQuery, AuthorsQuery }
+const authorMutation = {
+  type: AuthorType,
+  args: {
+    name: { type: GraphQLNonNull(GraphQLString) },
+    age: { type: GraphQLNonNull(GraphQLInt) }
+  },
+  resolve(){
+    return null
+  }
+}
+
+module.exports = { authorQuery, authorsQuery,  authorMutation }
