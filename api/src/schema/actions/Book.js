@@ -1,6 +1,6 @@
 const { GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = require('graphql')
-const db = require('../db')
-const BookType = require('./types/Book')
+const db = require('../../db')
+const BookType = require('../types/Book')
 // const BookType = Book()
 console.log('book type', BookType)
 // console.log('book', Book)
