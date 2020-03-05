@@ -1,7 +1,6 @@
 const { GraphQLList, GraphQLString, GraphQLInt, GraphQLID, GraphQLNonNull } = require('graphql')
 const db = require('../../db')
 const AuthorType = require('../types/Author')
-console.log('book type', AuthorType)
 
 const authorsQuery = {
   // relates to the defined schema

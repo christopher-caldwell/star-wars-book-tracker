@@ -1,7 +1,9 @@
 CREATE TYPE era AS ENUM (
   'old_republic',
+  'high_republic',
   'clone_wars',
-  'civil_war'
+  'civil_war',
+  'post_civil_war'
 );
 
 CREATE TYPE book_media_type AS ENUM (

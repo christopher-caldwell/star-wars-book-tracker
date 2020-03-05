@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLSchema } = require('graphql')
-const { bookQuery, booksQuery, bookMutation } = require('./Book')
-const { authorQuery, authorsQuery, authorMutation } = require('./Author')
+const { bookQuery, booksQuery, bookMutation } = require('./actions/Book')
+const { authorQuery, authorsQuery, authorMutation } = require('./actions/Author')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
