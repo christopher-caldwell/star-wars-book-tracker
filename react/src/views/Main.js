@@ -1,10 +1,10 @@
 import React from 'react';
 import Crawl from 'components/util/Crawl'
 
-const Main = () => {
+const Main = () => {  
   return (
     <div className="main-cont">
-      <Crawl/>  
+      <Crawl/>
     </div>
   );
 };
