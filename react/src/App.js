@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
+import Router from "router/Router";
+import Header from 'components/header/Header'
+const persistedMode = JSON.parse(window.localStorage.getItem("persistedMode"));
 
 function App() {
+  const [themeMode, setThemeMode] = useState(persistedMode || "light");
+  const theme = createMuiTheme({
+    palette: {
+      type: themeMode,
+    }
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Header/>
+        <Router currentTheme={themeMode} setThemeMode={setThemeMode} />
+      </div>
+    </ThemeProvider>
   );
 }
 
