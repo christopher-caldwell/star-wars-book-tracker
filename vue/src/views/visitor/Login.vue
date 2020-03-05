@@ -1,5 +1,14 @@
 <template lang='pug'>
-	v-container
+	v-container#space
+		div.stars
+		div.stars
+		div.stars
+		div.stars
+		div.stars
+		div.stars
+		div.stars
+		div.stars
+		div.stars
 		v-row
 			v-col(align='center')
 				h1.sw-yellow Login

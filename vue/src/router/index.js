@@ -50,7 +50,12 @@ const routes = [
 				path: 'home',
 				name: 'UserHome',
 				component: () => import('@/views/authenticated/Home.vue'),
-			}
+			},
+			{
+				path: 'books',
+				name: 'Book',
+				component: () => import('@/views/authenticated/books/BookList.vue'),
+			},
     ]
   },
   {
