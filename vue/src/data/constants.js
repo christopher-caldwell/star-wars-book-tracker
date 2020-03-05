@@ -1,0 +1,1 @@
+export const swYellow = '#feda4a'
